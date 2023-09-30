@@ -21,7 +21,15 @@
             { data: 'descripcion', title: 'Descripcion' },
             { data: 'precio', title: 'Precio' },
             { data: 'stock', title: 'Stock' },
-            { data: 'activo', title: 'Activo' }
+            { data: 'activo', title: 'Activo' },
+            {
+                data: function (data) {
+                    var botones = 
+                        `<td><a href='javascript:EditarProducto(${JSON.stringify(data)})'><i class="fa-solid fa-pen-to-square editarProducto"></i></td>` +
+                        `<td><a href='javascript:EliminarProducto(${JSON.stringify(data)})'><i class="fa-solid fa-trash eliminarProducto"></i></td>`
+                    return botones;
+                }
+            }
         ]
     });
 });
