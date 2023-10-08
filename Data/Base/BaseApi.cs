@@ -37,5 +37,25 @@ namespace Data.Base
                 return Unauthorized();
             }
         }
+
+        public async Task<IActionResult> GetToApi(string controllerName, string token)
+        {
+            try
+            {
+                var client = _httpClient.CreateClient("useApi");
+                var response = await client.GetAsync(controllerName);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return Ok(content);
+                }
+                return Unauthorized();
+            }
+            catch (Exception)
+            {
+                return Unauthorized();
+                throw;
+            }
+        }
     }
 }

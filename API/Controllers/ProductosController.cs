@@ -27,5 +27,12 @@ namespace API.Controllers
         {
             return await _services.Guardar(producto);
         }
+
+        [HttpPost]
+        [Route("EliminarProducto")]
+        public async Task<bool> EliminarProducto(Productos producto)
+        {
+            return await _services.Eliminar(producto);
+        }
     }
 }

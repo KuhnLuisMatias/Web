@@ -1,6 +1,11 @@
-﻿namespace API.Interfaces
+﻿using Data.Entities;
+
+namespace API.Interfaces
 {
-    public interface IServicioService
+    public interface IServicioServices
     {
+        Task<List<Servicios>> BuscarLista();
+        Task<List<Servicios>> Guardar(Servicios servicio);
+        Task<bool> Eliminar(Servicios servicio);
     }
 }

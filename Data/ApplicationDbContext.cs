@@ -12,6 +12,9 @@ namespace Data
     {
         public static string ConnectionString { get; set; } = string.Empty;
         public DbSet<Productos> Productos { get; set; }
+        public DbSet<Roles> Roles { get; set; }
+        public DbSet<Usuarios> Usuarios { get; set; }
+        public DbSet<Servicios> Servicios { get; set; }
 
         public ApplicationDbContext() : base()
         {
@@ -20,6 +23,7 @@ namespace Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             optionsBuilder.UseSqlServer(ConnectionString);
         }
     }
