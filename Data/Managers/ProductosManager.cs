@@ -21,9 +21,13 @@ namespace Data.Managers
             return await ContextoSingleton.Productos.Where(x => x.Activo).ToListAsync();
         }
 
-        public override Task<bool> Eliminar(Productos modelo)
+        public override async Task<bool> Eliminar(Productos modelo)
         {
-            throw new NotImplementedException();
+            ContextoSingleton.Entry(modelo).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var resultado = await ContextoSingleton.SaveChangesAsync() > 0;
+            ContextoSingleton.Entry(modelo).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+
+            return resultado;
         }
     }
 }

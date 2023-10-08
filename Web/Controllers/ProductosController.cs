@@ -1,6 +1,7 @@
 ﻿using Data.Base;
 using Data.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -18,9 +19,14 @@ namespace Web.Controllers
             return View();
         }
 
-        public IActionResult ProductosAddPartial(Productos productos)
+        public IActionResult ProductosAddPartial([FromBody]Productos productos)
         {
-            return PartialView("~/Views/Productos/Partial/ProductosAddPartial.cshtml");
+            var productosViewModel = new ProductosViewModel();
+
+            if(productos != null)
+                productosViewModel = productos;
+
+            return PartialView("~/Views/Productos/Partial/ProductosAddPartial.cshtml",productosViewModel);
         }
 
         public IActionResult GuardarProducto(Productos producto)
@@ -40,7 +46,13 @@ namespace Web.Controllers
 
             var productos = baseApi.PostToAPI("Productos/GuardarProducto", producto, "");
             return View("~/Views/Productos/productos.cshtml");
+        }
 
+        public IActionResult EliminarProducto([FromBody] Productos producto)
+        {
+            var baseApi = new BaseApi(_httpClientFactory);
+            var productos = baseApi.PostToAPI("Productos/EliminarProducto", producto, "");
+            return View("~/Views/Productos/productos.cshtml");
         }
     }
 }

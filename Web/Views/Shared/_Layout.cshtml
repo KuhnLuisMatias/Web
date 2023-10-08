@@ -10,7 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/lib/moment/moment.min.js"></script>
+    <script src="https://kit.fontawesome.com/37393c3833.js" crossorigin="anonymous"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-datatables/jquery.datatables.min.js"></script>
     <script src="~/lib/datatables.bootstrap5/dist/js/datatables.bootstrap5.min.js"></script>
@@ -27,16 +29,16 @@
                         <a class="sidebar-link" asp-controller="Home" asp-action="Index"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Inicio</span></a>
                     </li>
                     <li class="sidebar-item active">
-                        <a class="sidebar-link" asp-controller="Home" asp-action="Index"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Usuarios</span></a>
+                        <a class="sidebar-link" asp-controller="Usuarios" asp-action="Usuarios"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Usuarios</span></a>
                     </li>
                     <li class="sidebar-item active">
-                        <a class="sidebar-link" asp-controller="Home" asp-action="Index"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Roles</span></a>
+                        <a class="sidebar-link" asp-controller="Roles" asp-action="Roles"><i class="fa-solid fa-dice" data-feather="sliders"></i> <span class="align-middle">Roles</span></a>
                     </li>
                     <li class="sidebar-item active">
                         <a class="sidebar-link" asp-controller="Productos" asp-action="Productos"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Productos</span></a>
                     </li>
                     <li class="sidebar-item active">
-                        <a class="sidebar-link" asp-controller="Home" asp-action="Index"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Servicios</span></a>
+                        <a class="sidebar-link" asp-controller="Servicios" asp-action="Servicios"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Servicios</span></a>
                     </li>
                     <li class="sidebar-item active">
                         <a class="sidebar-link" asp-controller="Home" asp-action="Index"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Chat</span></a>

@@ -6,5 +6,6 @@ namespace API.Interfaces
     {
         Task<List<Productos>> BuscarLista();
         Task<List<Productos>> Guardar(Productos producto); 
+        Task<bool> Eliminar(Productos producto); 
     }
 }

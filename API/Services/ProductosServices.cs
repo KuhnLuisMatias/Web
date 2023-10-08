@@ -37,5 +37,18 @@ namespace API.Services
                 throw;
             }
         }
+
+        public async Task<bool> Eliminar(Productos producto)
+        {
+            try
+            {
+                producto.Activo = false;
+                return await _manager.Eliminar(producto);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
