@@ -15,7 +15,6 @@ namespace Data
         public DbSet<Roles> Roles { get; set; }
         public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Servicios> Servicios { get; set; }
-
         public ApplicationDbContext() : base()
         {
 

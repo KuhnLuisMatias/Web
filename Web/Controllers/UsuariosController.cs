@@ -1,5 +1,6 @@
 ﻿using Data.Base;
 using Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -16,6 +17,7 @@ namespace Web.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
+        //[Authorize(Roles ="Administrador,Usuario,Mantenimiento2,SQL")]
         public IActionResult Usuarios()
         {
             return View();

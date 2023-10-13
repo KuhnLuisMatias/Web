@@ -18,7 +18,7 @@ namespace Data.Entities
         public int Id_Rol { get; set; }
         public bool Activo { get; set; }
         public int? Codigo { get; set; }
-        public Roles Roles { get; set; }
-
+        public Roles? Roles { get; set; }
+        public string Mail { get; set; }
     }
 }

@@ -9,6 +9,7 @@
             { data: 'id', title: 'Id' },
             { data: 'nombre', title: 'Nombre' },
             { data: 'apellido', title: 'Apellido' },
+            { data: 'mail', title:'Mail'},
             { data: 'activo', title: 'Activo' },
             {
                 data: function (data) {

@@ -8,6 +8,7 @@ namespace Web.ViewModels
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
+        public string Mail { get; set; }
         public DateTime Fecha_Nacimiento { get; set; }
         public string Clave { get; set; }
         public int Id_Rol { get; set; }
@@ -22,6 +23,7 @@ namespace Web.ViewModels
                 Id = v.Id,
                 Nombre = v.Nombre,
                 Apellido = v.Apellido,
+                Mail = v.Mail,
                 Fecha_Nacimiento = v.Fecha_Nacimiento,
                 Clave = v.Clave,
                 Id_Rol = v.Id_Rol,
