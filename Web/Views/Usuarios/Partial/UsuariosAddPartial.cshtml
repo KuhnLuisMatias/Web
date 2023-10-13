@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
 
-                @using (Html.BeginForm("GuardarUsuario", "usuarios", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("GuardarUsuario", "Usuarios", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.HiddenFor(x=>x.Id)
 
@@ -17,6 +17,27 @@
                         <div class="col-md-6 mt-1 mb-3">
                             <label class="col-md-4 form-contusuario-label">Nombre</label>
                             @Html.EditorFor(x=>x.Nombre,new{htmlAttributes = new{@class="col-md8 form-contusuario"}})
+                        </div>
+                    </div>
+
+                     <div class="row">
+                        <div class="col-md-6 mt-1 mb-3">
+                            <label class="col-md-4 form-contusuario-label">Apellido</label>
+                            @Html.EditorFor(x=>x.Apellido,new{htmlAttributes = new{@class="col-md8 form-contusuario"}})
+                        </div>
+                    </div>
+
+                     <div class="row">
+                        <div class="col-md-6 mt-1 mb-3">
+                            <label class="col-md-4 form-contusuario-label">Mail</label>
+                            @Html.EditorFor(x=>x.Mail,new{htmlAttributes = new{@class="col-md8 form-contusuario"}})
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mt-1 mb-3">
+                            <label class="col-md-4 form-contusuario-label">Clave</label>
+                            @Html.EditorFor(x=>x.Clave,new{htmlAttributes = new{@class="col-md8 form-contusuario"}})
                         </div>
                     </div>
 

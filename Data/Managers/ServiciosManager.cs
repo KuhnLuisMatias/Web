@@ -28,7 +28,7 @@ namespace Data.Managers
 
         public async Task<bool> Guardar(Servicios servicio)
         {
-            return Convert.ToBoolean(ContextoSingleton.Database.ExecuteSqlRaw($"GuardarServicio {servicio.Id},{servicio.Nombre}, {servicio.Activo}"));
+            return Convert.ToBoolean(ContextoSingleton.Database.ExecuteSqlRaw($"GuardarServicio '{servicio.Id}','{servicio.Nombre}', '{servicio.Activo}'"));
         }
     }
 }

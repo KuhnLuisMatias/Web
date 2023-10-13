@@ -1,4 +1,5 @@
 ﻿using API.Interfaces;
+using Commons.Helpers;
 using Data.Entities;
 using Data.Managers;
 
@@ -29,6 +30,7 @@ namespace API.Services
         {
             try
             {
+                usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
                 var resultado = await _manager.Guardar(usuario, usuario.Id);
                 return await _manager.BuscarLista();
             }

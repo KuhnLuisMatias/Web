@@ -18,7 +18,7 @@ namespace API.Services
         {
             try
             {
-                throw new Exception("BuscarLista error forzado");
+                //throw new Exception("BuscarLista error forzado");
                 return await _manager.BuscarLista();
             }
             catch (Exception ex)
