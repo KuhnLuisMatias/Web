@@ -28,14 +28,21 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-builder.Services.AddAuthorization(options =>
+/*
+builder.Services.AddAuthorization(option =>
 {
-    //Otra forma de utilizar el [Autorize]
-    options.AddPolicy("ADMINISTRADORES", policy =>
+    option.AddPolicy("ADMINISTRADORES", policy =>
     {
         policy.RequireRole("Administrador");
     });
+
+    option.AddPolicy("USUARIOS", policy =>
+    {
+        policy.RequireRole("Usuario");
+    });
 });
+
+*/
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
