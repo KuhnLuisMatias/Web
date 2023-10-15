@@ -1,15 +1,18 @@
 ﻿$(document).ready(function () {
-    $('#usuarios').dataTable({
 
+    var token = getCookie("Token");
+    debugger
+    $('#usuarios').dataTable({
         ajax: {
             url: "https://localhost:7078/api/Usuarios/BuscarUsuarios",
-            dataSrc: ""
+            dataSrc: "",
+            headers: { "Authorization": "Bearer " + token }
         },
         columns: [
             { data: 'id', title: 'Id' },
             { data: 'nombre', title: 'Nombre' },
             { data: 'apellido', title: 'Apellido' },
-            { data: 'mail', title:'Mail'},
+            { data: 'mail', title: 'Mail' },
             { data: 'activo', title: 'Activo' },
             {
                 data: function (data) {

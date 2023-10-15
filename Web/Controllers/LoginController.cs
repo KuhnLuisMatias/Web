@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
+using Web.ViewModels;
 
 namespace Web.Controllers
 {
@@ -54,8 +55,9 @@ namespace Web.Controllers
             {
                 var resultadoSplit = resultadoLogin.Value.ToString().Split(";");
                 ClaimsIdentity identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                Claim claimNombre = new(ClaimTypes.Name, resultadoSplit[0]);
-                Claim claimRole = new(ClaimTypes.Role, resultadoSplit[1]);
+                Claim claimNombre = new(ClaimTypes.Name, resultadoSplit[1]);
+                Claim claimRole = new(ClaimTypes.Role, resultadoSplit[2]);
+                Claim claimEmail = new(ClaimTypes.Email, resultadoSplit[3]);
 
                 identity.AddClaim(claimNombre);
                 identity.AddClaim(claimRole);
@@ -67,8 +69,9 @@ namespace Web.Controllers
                     ExpiresUtc = DateTime.Now.AddDays(1)
                 });
 
+                var homeViewModel = new HomeViewModel() { Token = resultadoSplit[0] };
 
-                return View("~/Views/Home/Index.cshtml");
+                return View("~/Views/Home/Index.cshtml",homeViewModel);
             }
             else
             {

@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen(options =>
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
-        Scheme = "Bearer"
+        Scheme = "bearer"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -45,7 +45,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
+ApplicationDbContext.ConnectionString = builder.Configuration.GetConnectionString("ConnectionSRV");
 
 builder.Services.AddAuthentication(options =>
 {
@@ -65,7 +65,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-ApplicationDbContext.ConnectionString = builder.Configuration.GetConnectionString("ConnectionSRV");
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -77,6 +77,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
