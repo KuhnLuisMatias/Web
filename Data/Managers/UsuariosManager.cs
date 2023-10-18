@@ -1,4 +1,5 @@
 ﻿using Data.Base;
+using Data.Dto;
 using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -28,6 +29,22 @@ namespace Data.Managers
             ContextoSingleton.Entry(modelo).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
 
             return resultado;
+        }
+
+        public async Task<Usuarios> BuscarUsuarioAsync(UsuariosDto usuario)
+        {
+            return await ContextoSingleton.Usuarios.FirstOrDefaultAsync(x => x.Mail == usuario.Mail);
+        }
+
+        public async Task<Usuarios> BuscarUsuarioAsync(CrearCuentaDto usuario)
+        {
+            return await ContextoSingleton.Usuarios.FirstOrDefaultAsync(x => x.Mail == usuario.Mail);
+        }
+
+        public async Task<Usuarios> BuscarUsuarioGoogleAsync(LoginDto LoginDto)
+        {
+            var result = await ContextoSingleton.Usuarios.FirstOrDefaultAsync(x => x.Mail == LoginDto.Mail && x.Activo == true);
+            return result;
         }
     }
 }

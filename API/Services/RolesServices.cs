@@ -15,6 +15,7 @@ namespace API.Services
 
         public async Task<List<Roles>> BuscarLista()
         {
+            //Con la excepción del Middleware salta el error throw new Exception();
             try
             {
                 return await _manager.BuscarLista();

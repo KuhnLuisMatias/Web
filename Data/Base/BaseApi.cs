@@ -24,6 +24,11 @@ namespace Data.Base
             try
             {
                 var client = _httpClient.CreateClient("useApi");
+                //En caso de logueo no es necesario null por eso != null
+                if(token != null)
+                {
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer",token);
+                }
                 var response = await client.PostAsJsonAsync(controllerName, model);
                 if (response.IsSuccessStatusCode)
                 {

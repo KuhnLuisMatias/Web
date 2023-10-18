@@ -26,13 +26,13 @@ namespace API.Services
             }
         }
 
-        public async Task<List<Usuarios>> Guardar(Usuarios usuario)
+        public async Task<bool> Guardar(Usuarios usuario)
         {
             try
             {
                 usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
                 var resultado = await _manager.Guardar(usuario, usuario.Id);
-                return await _manager.BuscarLista();
+                return resultado;
             }
             catch (Exception)
             {

@@ -47,16 +47,19 @@ namespace Web.Controllers
 
         public IActionResult GuardarUsuario(Usuarios usuario)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClientFactory);
 
-            var usuarioApi = baseApi.PostToAPI("Usuarios/GuardarUsuario", usuario, "");
+            var usuarioApi = baseApi.PostToAPI("Usuarios/GuardarUsuario", usuario, token);
             return View("~/Views/Usuarios/usuarios.cshtml");
         }
 
         public IActionResult EliminarUsuario([FromBody] Usuarios usuario)
         {
+            var token = HttpContext.Session.GetString("Token");
             var baseApi = new BaseApi(_httpClientFactory);
-            var usuarioApi = baseApi.PostToAPI("Usuarios/EliminarUsuario", usuario, "");
+
+            var usuarioApi = baseApi.PostToAPI("Usuarios/EliminarUsuario", usuario, token);
             return View("~/Views/Usuarios/usuarios.cshtml");
         }
     }
