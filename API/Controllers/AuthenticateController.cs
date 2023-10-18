@@ -14,13 +14,59 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class AuthenticateController : Controller
     {
-        private static ApplicationDbContext contextIntance;
+        private static ApplicationDbContext contextInstance;
         private readonly IConfiguration _configuration;
         public AuthenticateController(IConfiguration configuration)
         {
-            contextIntance = new ApplicationDbContext();
+            contextInstance = new ApplicationDbContext();
             _configuration = configuration;
 
+        }
+       
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login(LoginDto usuario)
+        {
+            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
+            var validarUsuario = contextInstance.Usuarios.Include(x => x.Roles).FirstOrDefault(u => u.Clave == usuario.Clave && u.Mail== usuario.Mail);
+            if (validarUsuario != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email,validarUsuario.Mail),
+                    new Claim(ClaimTypes.DateOfBirth,validarUsuario.Fecha_Nacimiento.ToString()),
+                    new Claim(ClaimTypes.Role,validarUsuario.Roles.Nombre)
+                };
+
+                var token = CrearToken(claims);
+
+                return Ok($"{new JwtSecurityTokenHandler().WriteToken(token).ToString()};{validarUsuario.Nombre};{validarUsuario.Roles.Nombre};{validarUsuario.Mail}");
+            }
+            else
+                return Unauthorized();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public string LoginGoogle(LoginDto loginDto)
+        {
+            var validarUsuario = contextInstance.Usuarios.Where(x => x.Mail == loginDto.Mail).Include(x => x.Roles).FirstOrDefault();
+
+            if (validarUsuario != null)
+            {
+                var claim = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Email, validarUsuario.Mail),
+                    new Claim(ClaimTypes.DateOfBirth, validarUsuario.Fecha_Nacimiento.ToString()),
+                    new Claim(ClaimTypes.Role, validarUsuario.Roles.Nombre),
+                };
+
+                var token = CrearToken(claim);
+                return new JwtSecurityTokenHandler().WriteToken(token).ToString() + ";" + validarUsuario.Nombre + ";" + validarUsuario.Roles.Nombre + ";" + validarUsuario.Mail;
+            }
+            else
+            {
+                return "";
+            }
         }
 
         private JwtSecurityToken CrearToken(List<Claim> autorizar)
@@ -40,27 +86,5 @@ namespace API.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("Login")]
-        public async Task<IActionResult> Login(LoginDto usuario)
-        {
-            usuario.Clave = EncryptHelper.Encriptar(usuario.Clave);
-            var validarUsuario = contextIntance.Usuarios.Include(x => x.Roles).FirstOrDefault(u => u.Clave == usuario.Clave && u.Mail== usuario.Mail);
-            if (validarUsuario != null)
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Email,validarUsuario.Mail),
-                    new Claim(ClaimTypes.DateOfBirth,validarUsuario.Fecha_Nacimiento.ToString()),
-                    new Claim(ClaimTypes.Role,validarUsuario.Roles.Nombre)
-                };
-
-                var token = CrearToken(claims);
-
-                return Ok($"{new JwtSecurityTokenHandler().WriteToken(token).ToString()};{validarUsuario.Nombre};{validarUsuario.Roles.Nombre};{validarUsuario.Mail}");
-            }
-            else
-                return Unauthorized();
-        }
     }
 }

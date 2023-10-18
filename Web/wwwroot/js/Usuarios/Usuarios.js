@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
 
     var token = getCookie("Token");
-    debugger
     $('#usuarios').dataTable({
         ajax: {
             url: "https://localhost:7078/api/Usuarios/BuscarUsuarios",

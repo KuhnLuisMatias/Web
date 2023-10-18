@@ -1,12 +1,15 @@
-﻿using Data.Base;
+﻿using API.Controllers;
+using Data.Base;
 using Data.Dto;
 using Data.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
+using Web.Services;
 using Web.ViewModels;
 
 namespace Web.Controllers
@@ -70,8 +73,8 @@ namespace Web.Controllers
                 });
 
                 var homeViewModel = new HomeViewModel() { Token = resultadoSplit[0] };
-
-                return View("~/Views/Home/Index.cshtml",homeViewModel);
+                HttpContext.Session.SetString("Token", resultadoSplit[0]);
+                return View("~/Views/Home/Index.cshtml", homeViewModel);
             }
             else
             {
@@ -91,7 +94,7 @@ namespace Web.Controllers
             usuario.Id_Rol = 2;
             usuario.Activo = true;
             var baseApi = new BaseApi(_httpClient);
-            var response = await baseApi.PostToAPI("Usuarios/GuardarUsuario", usuario, "");
+            var response = await baseApi.PostToAPI("Usuarios/CrearUsuario", usuario, "");
             var resultadoLogin = response as OkObjectResult;
 
             //if (resultadoLogin != null && resultadoLogin.Value.ToString() == "true") 
@@ -101,7 +104,7 @@ namespace Web.Controllers
         public async Task<IActionResult> CambiarClave(LoginDto login)
         {
             var baseApi = new BaseApi(_httpClient);
-            var response = await baseApi.PostToAPI("RecuperarCuenta/CambiarClave", login,"");
+            var response = await baseApi.PostToAPI("RecuperarCuenta/CambiarClave", login, "");
             var resultadoLogin = response as OkObjectResult;
 
             if (resultadoLogin != null && resultadoLogin.Value.ToString() == "true")
@@ -151,6 +154,53 @@ namespace Web.Controllers
             var mensaje = $"<strong>Codigo a ingresar: {codigo} </strong>";
 
             return mensaje;
+        }
+
+
+        public async Task LoginGoogle()
+        {
+            await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties()
+            {
+                RedirectUri = Url.Action("GoogleResponse")
+            });
+        }
+
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var resultado = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var claims = resultado.Principal.Identities.FirstOrDefault().Claims.Select(claim => new
+            {
+                claim.Value,
+                claim.Type,
+                claim.Issuer,
+                claim.OriginalIssuer
+            });
+            var login = new LoginDto();
+            login.Mail = claims.ToList()[4].Value;
+
+            var usuarioServicio = new UsuarioService();
+            var usuario = usuarioServicio.BuscarUsuario(login).Result;
+
+            if (usuario != null)
+            {
+                var authenticate = new AuthenticateController(_configuration);
+
+                var token = authenticate.LoginGoogle(login);
+
+                var resultadoSplit = token.ToString().Split(";");
+                ViewBag.NombreUsuario = resultadoSplit[1];
+                HttpContext.Session.SetString("Token", resultadoSplit[0]);
+                var homeViewModel = new HomeViewModel();
+                homeViewModel.Token = resultadoSplit[0];
+                return View("~/Views/Home/Index.cshtml", homeViewModel);
+
+            }
+            else
+            {
+                TempData["ErrorLogin"] = "El usuario no existe";
+                return RedirectToAction("Login", "Login");
+            }
         }
     }
 }
