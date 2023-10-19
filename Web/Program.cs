@@ -2,6 +2,7 @@ using Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
+using Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,7 @@ policy =>
     policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
 }));
 
+builder.Services.AddSignalR();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -90,5 +92,7 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Login}/{id?}");
+
+app.MapHub<ChatHub>("/Chat");
 
 app.Run();
