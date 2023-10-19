@@ -19,6 +19,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link href="~/lib/datatables.bootstrap5/dist/css/datatables.bootstrap5.min.css" rel="stylesheet" />
     <script src="~/js/utils/utils.js"></script>
+    <script src="~/lib/microsoft/signalr/signalr.js"></script>
 
     <div class="wrapper">
         <nav id="sidebar" class="sidebar js-sidebar">
@@ -42,7 +43,7 @@
                         <a class="sidebar-link" asp-controller="Servicios" asp-action="Servicios"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Servicios</span></a>
                     </li>
                     <li class="sidebar-item active">
-                        <a class="sidebar-link" asp-controller="Home" asp-action="Index"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Chat</span></a>
+                        <a class="sidebar-link" asp-controller="Chat" asp-action="Chat"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Chat</span></a>
                     </li>
                     <li class="sidebar-item active">
                         <a class="sidebar-link" asp-controller="Login" asp-action="CerrarSesion"><i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Cerrar Sesion</span></a>
